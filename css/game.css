@@ -1,32 +1,94 @@
+/* Custom properties for easy theme switching */
+:root {
+  --color-primary: #e44d26; /* A reddish-orange, like Mario's hat */
+  --color-secondary: #007acc; /* A deep blue, like the sky/levels */
+  --color-dark: #1f1f1f;
+  --color-light: #ffffff;
+}
+
+/* Base Reset and Global Styling */
 html, body, ul, li {
   margin: 0;
   border: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
+html, body {
+  /* Set a dark, game-themed background */
+  background-color: var(--color-dark);
+  color: var(--color-light);
+  /* Using a pixel/console font stack for a retro feel */
+  font-family: 'Press Start 2P', 'Courier New', monospace; 
+  overflow: hidden;
+  height: 100vh; /* Use vh for reliable full screen height */
+  /* Use flexbox to easily center the game vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* Canvas Styling - The Game Screen */
 canvas {
+  /* Explicit width and height (assuming a 4:3 aspect ratio) */
+  width: 762px; 
+  height: 572px; 
+  margin: 20px auto; 
   display: block;
-  width: 762;
-  margin: 0 auto;
-  background-color: blue;
+  background-color: var(--color-secondary);
+  border: 8px solid var(--color-light); /* White border for screen effect */
+  border-radius: 12px; /* Rounded corners for a retro screen look */
+  /* Add a deep shadow to make the game screen pop */
+  box-shadow: 
+    0 0 20px rgba(0, 0, 0, 0.7), 
+    0 0 50px var(--color-primary);
+  /* Slight transform for a subtle old-school TV tilt */
+  transform: rotate(0.5deg); 
+  transition: transform 0.3s ease; 
+  cursor: pointer;
 }
 
+/* Optional hover effect */
+canvas:hover {
+  transform: rotate(0deg) scale(1.01);
+  box-shadow: 
+    0 0 25px rgba(0, 0, 0, 0.8), 
+    0 0 60px var(--color-primary);
+}
+
+/* Text elements (Score, Info) */
 p {
   text-align: center;
+  margin: 10px 0;
+  font-size: 14px;
+  text-shadow: 2px 2px 0 #000; /* Outline for readability */
+  color: #ffcc00; /* Coin yellow */
 }
 
-body {
-  overflow: hidden;
-  height: 100%;
-}
-
-html {
-  overflow: hidden;
-  height: 100%;
-}
-
+/* Position and style for the info text */
 .info {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 10px;
+  left: 10px;
+  font-size: 16px;
+  /* Ensure the info text is visible over the dark background */
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 8px 12px;
+  border-radius: 6px;
+  z-index: 10;
+}
+
+/* --- Responsive Design for Mobile Devices --- */
+@media (max-width: 800px) {
+  /* Make the canvas fluid on smaller screens */
+  canvas {
+    width: 95vw; /* Take up 95% of viewport width */
+    height: calc(95vw * 0.75); /* Maintain 4:3 aspect ratio */
+    max-width: 762px;
+    max-height: 572px;
+    margin: 10px;
+    border-width: 4px;
+    transform: rotate(0deg); /* No rotation on mobile */
+  }
 }
